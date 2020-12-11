@@ -1,53 +1,38 @@
-# WSL Distro Launcher Reference Implementation
-## Introduction 
-This is the C++ reference implementation for a Windows Subsystem for Linux (WSL) distribution installer/launcher application. Every distro package must include a launcher app, which is responsible for completing installation & registration of your distro with WSL, and for launching new distro instances atop WSL.
+# Introduction
 
-Once you've built your distro launcher, packaged it along with the required art assets, manifest, and distro.tar.gz, and digitally signed the package, you will be able to sideload your distro on your own machine(s).
-  
-## Important! 
-Before publishing your distro to the Windows Store, you must first reach-out to and get approval from the WSL team: wslpartners@microsoft.com. 
+This is a clone of  [Microsoft WSL-DistroLauncher](https://github.com/Microsoft/WSL-DistroLauncher) and Merged from [WSL-ArchLinux](https://github.com/bilguun0203/WSL-ArchLinux) 
+to use Arch Linux as a Windows Subsystem for Linux (WSL2)
 
-Without testing and approval from the WSL team, distros submitted to the store will be rejected. This process is required in order to ensure the quality and integrity of the WSL distro ecosystem, and to safeguard our users.
+Use scripts to build the rootfs from arch bootstrap package (according to the [config in ArchLinuxFS](https://github.com/bilguun0203/ArchLinuxFS/blob/master/.travis.yml] but without 
+any third party built package.)
 
-## Goals
-The goal of this project is to enable:
+# Steps
 
-* Linux distribution owners to package and submit an application that runs on top of WSL to the Microsoft Store
-* Developers to create custom Linux distributions that can be sideloaded onto their dev machine
+## short version
+1. build fs (install.tar.gz)
+2. build sln 
+3. install 
 
-## Contents
-This reference launcher provides the following functionality:
-(where `launcher.exe` is replaced by the distro-specific name)
+## step by step
 
-* `launcher.exe`
-  - Launches the user's default shell in the user's home directory.
+1. Install a wsl2 system from Microsoft Store (Unbutu for example)
+2. Download an arch bootstrap package  from any arch mirror you like to the GenerateFS directory (archlinux-bootstrap-2020.12.01-x86_64.tar.gz for example)
+3. login to installed wsl2 system , cd the GenerateFS dir
+4. decompress the bootstrap package (use sudo)
+```
+sudo tar -zxpf archlinux-bootstrap-2020.12.01-x86_64.tar.gz
+```
+5. run the compile-0.sh get a stage-0 rootfs at out/install.tar.gz
+6. copy the install.tar.gz int to this project's x64 direcotry, build and install, you could get arch.exe 
+7. run arch.exe install you can get a running ArchLinuxe wsl2 system
+8. If you like, you could use pacstrap to get an new system, copy the bootstrap package, and run compile-1.sh
+9. copy the new install.tar.gz and rebuild workspace 
+10. remove old ArchLinux application and install the new one
 
-* `launcher.exe install [--root]`
-  - Install the distribution and do not launch the shell when complete.
-    - `--root`: Do not create a user account and leave the default user set to root.
+check the scripts to get the details
 
-* `launcher.exe run <command line>`
-  - Run the provided command line in the current working directory. If no command line is provided, the default shell is launched.
-  - Everything after `run` is passed to WslLaunchInteractive.
+# Buidl and Install Laucher:
 
-* `launcher.exe config [setting [value]]`
-  - Configure settings for this distribution.
-  - Settings:
-    - `--default-user <username>`: Sets the default user to <username>. This must be an existing user.
-
-* `launcher.exe help`
-  - Print usage information.
-
-## Launcher Outline
-This is the basic flow of how the launcher code is set up.
-
-1. If the distribution is not registered with WSL, register it. Registration extracts the tar.gz file that is included in your distribution appx.
-2. Once the distro is successfully registered, any other pre-launch setup is performed in `InstallDistribution()`. This is where distro-specific setup can be performed. As an example, the reference implementation creates a user account and sets this user account as the default for the distro.
-    - Note: The commands used to query and create user accounts in this reference implementation are Ubuntu-specific; change as necessary to match the needs of your distro.
-3. Once the distro is configured, parse any other command-line arguments. The details of these arguments are described above, in the [Introduction](#Introduction).
-
-## Project Structure
-The distro launcher is comprised of two Visual Studio projects - `launcher` and `DistroLauncher-Appx`. The `launcher` project builds the actual executable that is run when a user launches the app. The `DistroLauncher-Appx` builds the distro package with all the correctly scaled assets and other dependencies. Code changes will be built in the `launcher` project (under `DistroLauncher/`). Manifest changes are applied in the `DistroLauncher-Appx` project (under `DistroLauncher-Appx/`). 
 
 ## Getting Started
 1. Generate a test certificate:
@@ -139,38 +124,27 @@ When you first run your newly installed distro, it is unpacked and registered wi
 
 Once complete, you should see a Console window with your distro running inside it.
 
-### Publishing
-If you are a distro vendor and want to publish  your distro to the Windows store, you will need to complete some pre-requisite steps to ensure the quality and integrity of the WSL distro ecosystem, and to safeguard our users:
+## Contents
+This reference launcher provides the following functionality:
+(where `arch.exe` is replaced by the distro-specific name)
 
-#### Publishing Pre-Requisites
-1. Reach out to the WSL team to introduce your distro, yourself, and your team
-1. Agree with the WSL team on a testing and publishing plan
-1. Complete any required paperwork
-1. Sign up for an "Company" Windows Developer Account https://developer.microsoft.com/en-us/store/register. 
-    > Note: This can take a week or more since you'll be required to confirm your organization's identity with an independent verification service via email and/or telephone.
+* `arch.exe`
+  - Launches the user's default shell in the user's home directory.
 
-#### Publishing Code changes
-You'll also need to change a few small things in your project to prepare your distro for publishing to the Windows store
+* `arch.exe install [--root]`
+  - Install the distribution and do not launch the shell when complete.
+    - `--root`: Do not create a user account and leave the default user set to root.
 
-1. In your appxmanifest, you will need to change the values of the Identity field to match your identity in your Windows Store account:
+* `arch.exe run <command line>`
+  - Run the provided command line in the current working directory. If no command line is provided, the default shell is launched.
+  - Everything after `run` is passed to WslLaunchInteractive.
 
-``` xml
-<Identity Name="1234YourCompanyName.YourAppName"
-          Version="1.0.1.0"
-          Publisher="CN=12345678-045C-ABCD-1234-ABCDEF987654"
-          ProcessorArchitecture="x64" />
-```
+* `arch.exe config [setting [value]]`
+  - Configure settings for this distribution.
+  - Settings:
+    - `--default-user <username>`: Sets the default user to <username>. This must be an existing user.
 
-  > **NOTE**: Visual Studio can update this for you! You can do that by right-clicking on "DistroLauncher-Appx (Universal Windows)" in the solution explorer and clicking on "Store... Associate App with the Store..." and following the wizard. 
+* `arch.exe help`
+  - Print usage information.
 
-2. You will either need to run `build rel` from the command line to generate the Release version of your appx or use Visual Studio directly to upload your package to the store. You can do this by right-clicking on "DistroLauncher-Appx (Universal Windows)" in the solution explorer and clicking on "Store... Create App Packages..." and following the wizard.
 
-Also, make sure to check out the [Notes for uploading to the Store](https://github.com/Microsoft/WSL-DistroLauncher/wiki/Notes-for-uploading-to-the-Store) page on our wiki for more information.
-
-# Issues & Contact
-Any bugs or problems discovered with the Launcher should be filed in this project's Issues list. The team will be notified and will respond to the reported issue within 3 (US) working days.
-
-You may also reach out to our team alias at wslpartners@microsoft.com for questions related to submitting your app to the Microsoft Store.
-
-# Contributing
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
