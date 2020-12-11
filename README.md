@@ -16,19 +16,24 @@ Use scripts to build the rootfs from arch bootstrap package, according to the [c
 
 1. Install a wsl2 system from Microsoft Store (Unbutu for example)
 2. Download an arch bootstrap package  (archlinux-bootstrap-2020.12.01-x86_64.tar.gz for example) from any arch mirror you like. Put it into the directory GenerateFS 
-3. login to the installed wsl2 system, cd the GenerateFS dir
-4. decompress the bootstrap package (use sudo)
+3. login to the installed wsl2 system
+4. copy the GenerateFS dir to a temp dir
+5. decompress the bootstrap package (use sudo)
     ```
     sudo tar -zxpf archlinux-bootstrap-2020.12.01-x86_64.tar.gz
     ```
-5. run the compile-0.sh get a stage-0 rootfs at out/install.tar.gz
-6. copy the install.tar.gz int to this workspace's x64 direcotry, build and install, you could get `arch.exe`
-7. run `arch.exe install` , create user and set password
-8. now , you got an running wls2 arch linux system. 
-9. If you want pacstrap:
-    9.1 go to step 6 in the new ArchLinux system but use compile-1.sh to do bootstrap
-    9.2 copy the new install.tar.gz and rebuild workspace 
-    9.3. remove old ArchLinux application and install the new one
+6. run the `compile-0.sh` get a rootfs at `out/install.tar.gz`
+7. copy the `install.tar.g`z int to this workspace's `x64` direcotry, 
+8. build the workspace and install, you could get an usable `arch.exe`
+9. run `arch.exe install` , create user and set password
+10. now , you got an running wls2 arch linux system. 
+11. If you would like a pure bootstrapped system(use pacstrap):
+
+    11.1. go to step 4 in the new ArchLinux system but use compile-1.sh at step 6 to do bootstrap
+    
+    11.2. copy the new install.tar.gz and rebuild workspace 
+    
+    11.3. remove old ArchLinux application and install the new one
 
 check the scripts to get the details, enjoy :)
 
