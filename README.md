@@ -29,7 +29,15 @@ Use scripts to build the rootfs from arch bootstrap package, according to the [c
 10. now , you got an running wls2 arch linux system. 
 11. If you would like a pure bootstrapped system(use pacstrap):
 
-    11.1. go to step 4 in the new ArchLinux system but use `compile-1.sh` at step 6 to do bootstrap
+    11.1 login into he new new ArchLinux system as root
+    
+       ```
+       # open a powershell
+       arch.exe config --defualt-user root
+       arch.exe
+      
+       ```
+    11.1. repeat step 4, step5,  use `compile-1.sh` at step 6 to do bootstrap
     
     11.2. copy the new `install.tar.gz` and rebuild workspace 
     
