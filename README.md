@@ -23,7 +23,7 @@ Use scripts to build the rootfs from arch bootstrap package, according to the [c
     ```
 5. run the compile-0.sh get a stage-0 rootfs at out/install.tar.gz
 6. copy the install.tar.gz int to this workspace's x64 direcotry, build and install, you could get `arch.exe`
-7. run `arch.exe install` you can get a running ArchLinux wsl2 system
+7. run `arch.exe install` , create user and set password
 8. now , you got an running wls2 arch linux system. 
 9. If you want pacstrap:
     9.1 go to step 6 in the new ArchLinux system but use compile-1.sh to do bootstrap
