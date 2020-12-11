@@ -1,10 +1,9 @@
 # Introduction
 
-This is a clone of  [Microsoft WSL-DistroLauncher](https://github.com/Microsoft/WSL-DistroLauncher) and Merged from [WSL-ArchLinux](https://github.com/bilguun0203/WSL-ArchLinux) 
+This is a clone of  [Microsoft/WSL-DistroLauncher](https://github.com/Microsoft/WSL-DistroLauncher) and merged from [bilguun0203/WSL-ArchLinux](https://github.com/bilguun0203/WSL-ArchLinux) 
 to use Arch Linux as a Windows Subsystem for Linux (WSL2)
 
-Use scripts to build the rootfs from arch bootstrap package (according to the [config in ArchLinuxFS](https://github.com/bilguun0203/ArchLinuxFS/blob/master/.travis.yml] but without 
-any third party built package.)
+Use scripts to build the rootfs from arch bootstrap package, according to the [config in ArchLinuxFS](https://github.com/bilguun0203/ArchLinuxFS/blob/master/.travis.yml) but without any third party built package.
 
 # Steps
 
@@ -16,23 +15,24 @@ any third party built package.)
 ## step by step
 
 1. Install a wsl2 system from Microsoft Store (Unbutu for example)
-2. Download an arch bootstrap package  from any arch mirror you like to the GenerateFS directory (archlinux-bootstrap-2020.12.01-x86_64.tar.gz for example)
-3. login to installed wsl2 system , cd the GenerateFS dir
+2. Download an arch bootstrap package  (archlinux-bootstrap-2020.12.01-x86_64.tar.gz for example) from any arch mirror you like. Put it into the directory GenerateFS 
+3. login to the installed wsl2 system, cd the GenerateFS dir
 4. decompress the bootstrap package (use sudo)
-```
-sudo tar -zxpf archlinux-bootstrap-2020.12.01-x86_64.tar.gz
-```
+    ```
+    sudo tar -zxpf archlinux-bootstrap-2020.12.01-x86_64.tar.gz
+    ```
 5. run the compile-0.sh get a stage-0 rootfs at out/install.tar.gz
-6. copy the install.tar.gz int to this project's x64 direcotry, build and install, you could get arch.exe 
-7. run arch.exe install you can get a running ArchLinuxe wsl2 system
-8. If you like, you could use pacstrap to get an new system, copy the bootstrap package, and run compile-1.sh
-9. copy the new install.tar.gz and rebuild workspace 
-10. remove old ArchLinux application and install the new one
+6. copy the install.tar.gz int to this workspace's x64 direcotry, build and install, you could get `arch.exe`
+7. run `arch.exe install` you can get a running ArchLinux wsl2 system
+8. now , you got an running wls2 arch linux system. 
+9. If you want pacstrap:
+    9.1 go to step 6 in the new ArchLinux system but use compile-1.sh to do bootstrap
+    9.2 copy the new install.tar.gz and rebuild workspace 
+    9.3. remove old ArchLinux application and install the new one
 
-check the scripts to get the details
+check the scripts to get the details, enjoy :)
 
 # Buidl and Install Laucher:
-
 
 ## Getting Started
 1. Generate a test certificate:
