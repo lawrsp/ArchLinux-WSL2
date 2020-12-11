@@ -29,13 +29,13 @@ Use scripts to build the rootfs from arch bootstrap package, according to the [c
 10. now , you got an running wls2 arch linux system. 
 11. If you would like a pure bootstrapped system(use pacstrap):
 
-    11.1. go to step 4 in the new ArchLinux system but use compile-1.sh at step 6 to do bootstrap
+    11.1. go to step 4 in the new ArchLinux system but use `compile-1.sh` at step 6 to do bootstrap
     
-    11.2. copy the new install.tar.gz and rebuild workspace 
+    11.2. copy the new `install.tar.gz` and rebuild workspace 
     
     11.3. remove old ArchLinux application and install the new one
 
-check the scripts to get more details, enjoy :)
+To get more details, check the scripts, enjoy :)
 
 # Buidl and Install Laucher:
 
