@@ -35,7 +35,7 @@ Use scripts to build the rootfs from arch bootstrap package, according to the [c
     
     11.3. remove old ArchLinux application and install the new one
 
-check the scripts to get the details, enjoy :)
+check the scripts to get more details, enjoy :)
 
 # Buidl and Install Laucher:
 
